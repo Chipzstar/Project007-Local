@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<defs>
+<font id="am_icons" horiz-adv-x="1000" >
+<font-face font-family="am_icons" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="burger" unicode="&#xe800;" d="M0 850h1125v-86h-1125z m0-420h1125v-86h-1125z m0-438h1125v-86h-1125z" horiz-adv-x="1125" />
+
+<glyph glyph-name="back_arrow" unicode="&#xe801;" d="M467-139a38 38 0 0 1 55 1 43 43 0 0 1 1 57l-419 439 419 423a43 43 0 0 1-1 57 38 38 0 0 1-55 1l-467-481 467-497z" horiz-adv-x="533" />
+
+<glyph glyph-name="burger_close" unicode="&#xe802;" d="M58-34l849 849 65-65-849-849z m862-78l-849 849 65 65 849-849z" horiz-adv-x="1000" />
+
+<glyph glyph-name="rectangle" unicode="&#xe80a;" d="M-4 849h387v-1058h-387z" horiz-adv-x="383" />
+
+<glyph glyph-name="shape" unicode="&#xe80b;" d="M888 394h-348v345c0 22-18 40-40 40a40 40 0 0 1-40-40v-345h-348a40 40 0 0 1-41-40c0-22 19-40 41-40h348v-353c0-22 18-40 40-40 22 0 40 18 40 40v354h348c23 0 41 17 41 40 0 22-18 40-41 40z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>
