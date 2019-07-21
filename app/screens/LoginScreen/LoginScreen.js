@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert} from 'react-native';
-import {Header, Body, Content, Left, Button } from "native-base";
+import {Header, Body, Content, Left, Button} from "native-base";
 import * as firebase from 'react-native-firebase';
 import {ShowNavigationBar} from "react-native-navigation-bar-color";
 import OfflineNotice from "../../components/OfflineNotice";
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo, {useNetInfo} from "@react-native-community/netinfo";
 
 //images & icons
 import bgImage from '../../../app/assets/images/drawable-xxxhdpi/welcome-background.png';
@@ -21,7 +21,8 @@ class LoginScreen extends Component {
             email: '',
             password: '',
             showPassword: true,
-            press: false
+            press: false,
+            isConnected: false,
         };
     }
     
@@ -64,6 +65,28 @@ class LoginScreen extends Component {
         }
     };
     
+    checkConnection = async () => {
+        let state = await NetInfo.fetch();
+        if (!state.isConnected) {
+            this.setState({isConnected: false});
+            Alert.alert(
+                'No Internet Connection',
+                'Please connect to the Internet to Sign Up!',
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => console.log('Ok pressed')
+                    }
+                ],
+                {cancelable: true}
+            );
+        } else {
+            console.log("You are currently connected! Signing in....");
+        }
+        this.setState({isConnected: state.isConnected});
+        console.log(`Connected? ${state.isConnected}`);
+    };
+    
     validateEntry() {
         if (this.state.email == null || this.state.email === "") {
             alert("Email address field cannot be empty!");
@@ -76,10 +99,7 @@ class LoginScreen extends Component {
     }
     
     submit = () => {
-        let data = {};
-        data.email = this.state.email;
-        data.password = this.state.password;
-    
+        this.checkConnection();
         /**
          * Sends a new verification email link to the give user's email
          * Simple info message box displayed when email has been sent
@@ -122,19 +142,7 @@ class LoginScreen extends Component {
             }
         }
         
-        function checkConnection() {
-            NetInfo.fetch().then(state => {
-                if(!state.isConnected){
-                    console.log(`Is connected: ${state.isConnected}`);
-                    console.log('Please connect to the Internet to Sign Up!');
-                    return false;
-                }
-            });
-            console.log('You are currently connected!');
-            return true;
-        }
-        
-        if (this.validateEntry() && checkConnection()) {
+        if (this.validateEntry() && this.state.isConnected) {
             console.log("signing in...");
             firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
                 checkEmailVerified(this.props);
@@ -160,7 +168,11 @@ class LoginScreen extends Component {
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <AMIcon name={'back_arrow'} style={styles.backArrow}/>
-                            <Text style={{color: 'white', fontSize: 17, marginHorizontal: 10}}>Back</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 17,
+                                marginHorizontal: 10
+                            }}>Back</Text>
                         </Button>
                     </Left>
                     <Body>

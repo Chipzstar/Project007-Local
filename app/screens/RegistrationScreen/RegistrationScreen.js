@@ -36,7 +36,8 @@ class RegistrationScreen extends Component {
             maxDate: new Date(),
             dob: '',
             showPassword: true,
-            press: false
+            press: false,
+            isConnected: false
         };
     }
     
@@ -95,6 +96,31 @@ class RegistrationScreen extends Component {
         }
     };
     
+    /**
+     * Checks User is connected to the Internet
+     */
+    checkConnection = async () => {
+        let state = await NetInfo.fetch();
+        if (!state.isConnected) {
+            this.setState({isConnected: false});
+            Alert.alert(
+                'No Internet Connection',
+                'Please connect to the Internet to Sign Up!',
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => console.log('Ok pressed')
+                    }
+                ],
+                {cancelable: true}
+            );
+        } else {
+            console.log("You are currently connected! Signing in....");
+        }
+        this.setState({isConnected: state.isConnected});
+        console.log(`Connected? ${state.isConnected}`);
+    };
+    
     validateEntry = () => {
         if (this.state.email == null || this.state.email === "") {
             alert("Email address field cannot be empty!");
@@ -116,7 +142,7 @@ class RegistrationScreen extends Component {
     };
     
     submit() {
-    
+        this.checkConnection();
         /**
          * Controls the email verification process
          * Displays an info message box upon successful registration
@@ -167,22 +193,10 @@ class RegistrationScreen extends Component {
                 })
                 .catch((error) => console.log(error.message));
         }
-        /**
-         * Checks User is connected to the Internet
-         */
-        function checkConnection() {
-            NetInfo.fetch().then(state => {
-                if(!state.isConnected){
-                    console.log(`Is connected: ${state.isConnected}`);
-                    console.log('Please connect to the Internet to Sign Up!');
-                    return false;
-                }
-            });
-            console.log('You are currently connected!');
-            return true;
-        }
         
-        if (checkConnection() && this.validateEntry()) {
+        //SIGN UP API
+        
+        if (this.validateEntry() && this.state.isConnected) {
             firebase.auth().createUserWithEmailAndPassword(this.state.email.trim(), this.state.password1)
                 .then((success) => {
                     console.log('New account created!: ', success);
