@@ -42,7 +42,7 @@ export default (styles = StyleSheet.create({
         width: '100%',
         aspectRatio: 4.0,
         alignItems: 'center',
-        left: WIDTH * 0.05
+        // left: WIDTH * 0.05
     },
     text: {
         fontSize: 20
