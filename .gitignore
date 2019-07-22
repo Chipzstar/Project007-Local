@@ -33,7 +33,7 @@ local.properties
 # node.js
 #
 node_modules/
-!node_modules/react-native-expandable-fab-menu
+!node_modules/react-native-expandable-fab-menu/index.js
 npm-debug.log
 yarn-error.log
 
