@@ -31,7 +31,7 @@ export default (styles = StyleSheet.create({
 		flex: 1,
 		width: WIDTH,
 		flexDirection: 'row',
-		justifyContent: 'space-around',
-		bottom: 150
+		justifyContent: 'center',
+		bottom: HEIGHT * 0.2
 	}
 }));
