@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+    ImageBackground,
+    Text,
+    TextInput,
+    ToastAndroid,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import {Header, Body, Content, Left, Button} from "native-base";
 import bgImage from "../../assets/images/drawable-xxxhdpi/welcome-background.png";
 import {ShowNavigationBar} from 'react-native-navigation-bar-color';
@@ -16,11 +23,11 @@ import NetInfo from "@react-native-community/netinfo";
 class ForgotPasswordScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            email: "",
+            isConnected: false,
+        };
     }
-    
-    state = {
-        email: ""
-    };
     
     componentDidMount() {
         ShowNavigationBar();
@@ -36,41 +43,48 @@ class ForgotPasswordScreen extends Component {
         });
     }
     
+    checkConnection = async () => {
+        let state = await NetInfo.fetch();
+        if (!state.isConnected) {
+            this.setState({isConnected: false});
+            ToastAndroid.showWithGravity(
+                'No Internet Connection',
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            );
+        } else {
+            console.log("You are currently connected! Signing in....");
+        }
+        this.setState({isConnected: state.isConnected});
+        console.log(`Connected? ${state.isConnected}`);
+        return state;
+    };
+    
     validateEmail = () => {
         if (this.state.email == null || this.state.email === "") {
-            alert("You must enter an email address!");
+            ToastAndroid.show("You must enter an email address!", 3);
             return false;
         }
         return true;
     };
     
     submit() {
-        let data = {};
-        data.email = this.state.email;
-        
-        function checkConnection() {
-            let isConnected = true;
-            NetInfo.fetch().then(state => {
-                if(!state.isConnected){
-                    alert('Please connect to the Internet to Sign Up!');
-                    isConnected = false;
-                }
-            });
-            console.log('You are connected!');
-            return isConnected;
-        }
-        
-        // Password Reset API
-        if (checkConnection() && this.validateEmail()) {
-            firebase.auth().sendPasswordResetEmail(this.state.email.trim()).then(() => {
-                alert('Password Reset Email sent successfully! Please check your inbox');
-                this.props.navigation.navigate('SignedOut');
-            }).catch((error) => {
-                //Error handling if for invalid inputs
-                alert(error.message);
-                console.log(error);
-            });
-        }
+        /**
+         * Password Reset API
+         */
+        this.checkConnection().then((result) => {
+            console.log('Connection Status:', result);
+            if (this.validateEmail() && this.state.isConnected) {
+                firebase.auth().sendPasswordResetEmail(this.state.email.trim()).then(() => {
+                    alert('Password Reset Email sent successfully! Please check your inbox');
+                    this.props.navigation.navigate('SignedOut');
+                }).catch((error) => {
+                    //Error handling if for invalid inputs
+                    alert(error.message);
+                    console.log(error);
+                });
+            }
+        }).catch(reason => console.warn(reason));
     }
     
     render() {

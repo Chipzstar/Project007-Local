@@ -7,7 +7,9 @@ export default (styles = StyleSheet.create({
     menuItem: {
         width: '50%',
         height: '50%',
-        padding: 5
+        alignItems: 'center',
+        /*borderWidth: 2,
+        borderColor: 'red',*/
     },
     image: {
         width: '100%',

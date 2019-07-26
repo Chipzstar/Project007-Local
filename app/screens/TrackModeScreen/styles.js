@@ -15,6 +15,7 @@ export default (styles = StyleSheet.create({
         marginBottom: HEIGHT * 0.05,
         /*borderWidth: 1,
         borderColor: 'red'*/
+        
     },
     welcome: {
         flex: 1,
