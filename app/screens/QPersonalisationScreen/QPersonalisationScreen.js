@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
-import {View, Text } from 'react-native';
-import {Container, Body, Button, Content, Footer, Header, Icon, Left, Title} from "native-base";
+import {View, ImageBackground, Image} from 'react-native';
+import {Body, Button, Content, Footer, Header, Left, Right} from "native-base";
 import NavWheel from "../../components/NavWheel";
-import styles from './styles';
 import {HideNavigationBar} from "react-native-navigation-bar-color";
+
+//Images & Icons
 import AMIcon from "../../assets/icons/icon_font";
+import bgImage from '../../assets/images/drawable-xxxhdpi/q_background.png';
+import headerTitle from '../../assets/images/drawable-xxxhdpi/q_by_aston_martin.png';
+import q_preface from '../../assets/images/drawable-xxxhdpi/q_description.png';
+
+//styles
+import styles from './styles';
 
 class QPersonalisationScreen extends Component {
     constructor(props) {
@@ -24,7 +31,7 @@ class QPersonalisationScreen extends Component {
     
     render() {
         return (
-            <Container style={styles.container}>
+            <ImageBackground source={bgImage} style={styles.backgroundContainer}>
                 <Header transparent>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -32,18 +39,21 @@ class QPersonalisationScreen extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Q BY ASTON MARTIN</Title>
+                        <Image source={headerTitle} style={styles.header}/>
                     </Body>
+                    <Right>
+                    
+                    </Right>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.welcome}>
-                        <Text style={styles.text}>Welcome to the QPersonalisation Screen!</Text>
+                    <View style={styles.imageContainer}>
+                        <Image source={q_preface} style={styles.image}/>
                     </View>
                 </Content>
                 <NavWheel/>
                 <Footer style={{backgroundColor: 'transparent'}}>
                 </Footer>
-            </Container>
+            </ImageBackground>
         )
     }
 }
