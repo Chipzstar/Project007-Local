@@ -11,20 +11,20 @@ export default (styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginTop: HEIGHT * 0.25,
         marginBottom: HEIGHT * 0.05,
         /*borderWidth: 1,
         borderColor: 'red'*/
-        
     },
-    welcome: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold'
+    header: {
+        height: '100%',
+        width: '100%',
+        aspectRatio: 4.0,
+        alignItems: 'center'
+        // left: WIDTH * 0.05
     }
 }));
 

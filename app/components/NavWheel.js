@@ -11,7 +11,7 @@ import QTIcon from "../assets/images/drawable-xxxhdpi/q_nav_icon.png";
 import trackModeIcon from "../assets/images/drawable-xxxhdpi/amrtrack_nav_icon.png";
 import AMLiveIcon from "../assets/images/drawable-xxxhdpi/live_nav_icon.png";
 import homeIcon from '../assets/images/drawable-xxxhdpi/home_nav_icon.png';
-// import navWheelBackground from '../assets/images/drawable-xxxhdpi/oval.png';
+import navWheelBackground from '../assets/images/drawable-xxxhdpi/oval.png';
 
 const {width: WIDTH} = Dimensions.get("window"); //Max Width of phone screen
 const {height: HEIGHT} = Dimensions.get("window"); //Max Height of phone screen

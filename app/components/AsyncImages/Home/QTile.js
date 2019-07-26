@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import * as firebase from 'react-native-firebase';
-import styles from './Stylesheets/styles';
-import img from '../../assets/images/drawable-xxxhdpi/q.png';
+import styles from './styles';
+import img from '../../../assets/images/drawable-xxxhdpi/q.png';
 
 export default class QTile extends Component {
     constructor(props) {

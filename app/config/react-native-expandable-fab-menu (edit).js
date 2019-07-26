@@ -9,11 +9,11 @@ import {
     ImageBackground,
     Image
 } from 'react-native';
+import navWheelBackground from '../../app/assets/images/drawable-xxxhdpi/oval.png';
 
 let {width} = Dimensions.get('window');
 
 export class ExpandableFabMenu extends Component {
-    
     constructor(props) {
         super(props);
         this.state = {
@@ -90,7 +90,7 @@ export class ExpandableFabMenu extends Component {
                         height: 50,
                     }}/>
                 }
-                <View>
+                <View style={styles.subContainer}>
                     {(this.state.open && this.props.menuIcons[2] !== null && this.props.menuIcons[2] !== undefined) ?
                         <Animated.View style={{
                             opacity: this.state.fadeIn,
@@ -343,5 +343,6 @@ export function closeFab() {
             }
         )
     ]).start(() => this.setState({open: false}));
+    
 }
 */

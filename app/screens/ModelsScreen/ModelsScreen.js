@@ -10,9 +10,9 @@ import AMIcon from '../../assets/icons/icon_font';
 import headerTitle from '../../assets/images/drawable-xxxhdpi/models_header.png';
 
 //components
-import VantageTile from "../../components/AsyncImages/VantageTile";
-import DB11Tile from "../../components/AsyncImages/DB11Tile";
-import DBSTile from "../../components/AsyncImages/DBSTile";
+import VantageTile from "../../components/AsyncImages/Models/VantageTile";
+import DB11Tile from "../../components/AsyncImages/Models/DB11Tile";
+import DBSTile from "../../components/AsyncImages/Models/DBSTile";
 import NavWheel from '../../components/NavWheel';
 
 //styles

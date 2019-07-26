@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, ActivityIndicator, TouchableOpacity, Image} from 'react-native';
-import * as firebase from "react-native-firebase";
-import img from "../../assets/images/drawable-xxxhdpi/dbs.png";
-import styles from "./Stylesheets/styles2";
+import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
+import * as firebase from 'react-native-firebase';
+import styles from './Stylesheets/smallTile';
+import img from '../../../assets/images/drawable-xxxhdpi/amr_drivers_club.png';
 
-export default class DBSTile extends Component {
+export default class DriversClubTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,7 +13,8 @@ export default class DBSTile extends Component {
             url: "",
         }
     }
-    
+
+//The code that is called when the component is first mounted. Use it to setup the component and load the image files
     componentDidMount() {
         this.setState({isMounted: true});
         this.getAndLoadFirebaseUrl();
@@ -21,7 +22,7 @@ export default class DBSTile extends Component {
     
     async getAndLoadFirebaseUrl() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('ModelScreenTiles/dbs.png');
+            const ref = await firebase.storage().ref('TrackModeScreenTiles/amr_drivers_club.png');
             ref.getDownloadURL().then(url => {
                 this.setState({url: url});
                 this.setState({loading: false});
@@ -44,7 +45,6 @@ export default class DBSTile extends Component {
             //Write whatever code you want here.
         }
     }
-    
     render() {
         if (this.state.mounted) {
             if (this.state.loading) {
@@ -68,4 +68,4 @@ export default class DBSTile extends Component {
     }
 }
 
-export { DBSTile };
+export {DriversClubTile};

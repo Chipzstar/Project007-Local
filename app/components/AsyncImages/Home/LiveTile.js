@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import * as firebase from 'react-native-firebase';
-import styles from './Stylesheets/styles'
-import img from '../../assets/images/drawable-xxxhdpi/track_mode.png';
+import styles from './styles'
+import img from '../../../assets/images/drawable-xxxhdpi/live.png';
 
-export default class TrackTile extends Component {
+export default class LiveTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +22,7 @@ export default class TrackTile extends Component {
     
     async getAndLoadFirebaseUrl() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('HomeScreenTiles/track_mode.png');
+            const ref = await firebase.storage().ref('HomeScreenTiles/live.png');
             ref.getDownloadURL().then(url => {
                 this.setState({url: url});
                 this.setState({loading: false});
@@ -68,4 +68,4 @@ export default class TrackTile extends Component {
     }
 }
 
-export {TrackTile};
+export {LiveTile};

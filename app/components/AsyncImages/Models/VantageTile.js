@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
-import * as firebase from 'react-native-firebase';
-import styles from './Stylesheets/styles'
-import img from '../../assets/images/drawable-xxxhdpi/models.png';
+import {View, ActivityIndicator, TouchableOpacity, Image} from 'react-native';
+import * as firebase from "react-native-firebase";
+import img from "../../../assets/images/drawable-xxxhdpi/vantage.png";
+import styles from "./styles";
 
-export default class ModelsTile extends Component {
+export default class VantageTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,8 +13,7 @@ export default class ModelsTile extends Component {
             url: "",
         }
     }
-
-//The code that is called when the component is first mounted. Use it to setup the component and load the image files
+    
     componentDidMount() {
         this.setState({isMounted: true});
         this.getAndLoadFirebaseUrl();
@@ -22,7 +21,7 @@ export default class ModelsTile extends Component {
     
     async getAndLoadFirebaseUrl() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('HomeScreenTiles/models.png');
+            const ref = await firebase.storage().ref('ModelScreenTiles/vantage.png');
             ref.getDownloadURL().then(url => {
                 this.setState({url: url});
                 this.setState({loading: false});
@@ -45,6 +44,7 @@ export default class ModelsTile extends Component {
             //Write whatever code you want here.
         }
     }
+    
     render() {
         if (this.state.mounted) {
             if (this.state.loading) {
@@ -68,4 +68,4 @@ export default class ModelsTile extends Component {
     }
 }
 
-export {ModelsTile};
+export { VantageTile };

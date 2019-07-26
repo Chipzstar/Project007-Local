@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import * as firebase from 'react-native-firebase';
-import styles from './Stylesheets/styles'
-import img from '../../assets/images/drawable-xxxhdpi/live.png';
+import styles from './Stylesheets/bigTile'
+import img from '../../../assets/images/drawable-xxxhdpi/find_my_track.png';
 
-export default class LiveTile extends Component {
+export default class FindTrackTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +22,7 @@ export default class LiveTile extends Component {
     
     async getAndLoadFirebaseUrl() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('HomeScreenTiles/live.png');
+            const ref = await firebase.storage().ref('TrackModeScreenTiles/find_my_track.png');
             ref.getDownloadURL().then(url => {
                 this.setState({url: url});
                 this.setState({loading: false});
@@ -57,7 +57,7 @@ export default class LiveTile extends Component {
                 return (
                     <View style={styles.menuItem}>
                         <TouchableOpacity onPress={this.props.onPress}>
-                            <Image source={{uri : this.state.url}} style={styles.image}/>
+                            <Image style={styles.image} source={{uri : this.state.url}}/>
                         </TouchableOpacity>
                     </View>
                 )
@@ -68,4 +68,4 @@ export default class LiveTile extends Component {
     }
 }
 
-export {LiveTile};
+export {FindTrackTile};

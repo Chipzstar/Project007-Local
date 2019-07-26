@@ -12,6 +12,13 @@ export default (styles = StyleSheet.create({
         width: '100%',
         height: '100%'
     },
+    header: {
+        height: '100%',
+        width: '100%',
+        aspectRatio: 4.0,
+        alignItems: 'center'
+        // left: WIDTH * 0.05
+    },
     contentContainer:{
         flex: 1,
         flexDirection: 'column',
@@ -36,13 +43,6 @@ export default (styles = StyleSheet.create({
     addBtn: {
         aspectRatio: 0.5,
         resizeMode: 'contain'
-    },
-    header: {
-        height: '100%',
-        width: '100%',
-        aspectRatio: 4.0,
-        alignItems: 'center'
-        // left: WIDTH * 0.05
     },
     text: {
         fontSize: 20

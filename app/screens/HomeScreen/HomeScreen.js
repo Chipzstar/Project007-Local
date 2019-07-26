@@ -6,7 +6,7 @@ import {HideNavigationBar} from 'react-native-navigation-bar-color';
 import Feather from 'react-native-vector-icons/Feather';
 
 //images and icons
-import bgImage from "../../assets/images/drawable-xxxhdpi/profile-background.png";
+import bgImage from "../../assets/images/drawable-xxxhdpi/home-background.png";
 import headerTitle from "../../assets/images/drawable-xxxhdpi/am.png";
 import addBtn from '../../assets/images/drawable-xxxhdpi/add_button.png';
 import addCarLogo from '../../assets/images/drawable-xxxhdpi/add_car.png';
@@ -16,10 +16,10 @@ import AMIcon from '../../assets/icons/icon_font';
 import styles from "./styles";
 
 //components
-import ModelsTile from "../../components/AsyncImages/ModelsTile";
-import QTile from "../../components/AsyncImages/QTile";
-import TrackTile from "../../components/AsyncImages/TrackTile";
-import LiveTile from '../../components/AsyncImages/LiveTile';
+import ModelsTile from "../../components/AsyncImages/Home/ModelsTile";
+import QTile from "../../components/AsyncImages/Home/QTile";
+import TrackTile from "../../components/AsyncImages/Home/TrackTile";
+import LiveTile from '../../components/AsyncImages/Home/LiveTile';
 import NavWheel from '../../components/NavWheel';
 import OfflineStatus from '../../components/OfflineNotice';
 import navWheelBackground from "../../assets/images/drawable-xxxhdpi/oval.png";
@@ -113,14 +113,6 @@ class HomeScreen extends Component {
                 <Footer style={{backgroundColor: 'transparent'}}>
 
                 </Footer>
-                {/*</ImageBackground>*/}
-                {/*<Button onPress={this.showNavWheel.bind(this)}
-    style={styles.navIconContainer}
-    transparent>
-    {this.state.showNavWheel ?
-    <Image source={closeNavWheelIcon} style={styles.navIcon}/> :
-    <Image source={openNavWheelIcon} style={styles.navIcon}/>}
-    </Button>*/}
             </ImageBackground>
         );
     }

@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {View, Text, Switch, RefreshControl, Image, Platform} from 'react-native';
-import {Container, Header, Content, Title, Left, Body, Button, Icon} from "native-base";
+import {Container, Header, Content, Title, Left, Body, Button } from "native-base";
 import Avatar from '../../assets/images/avatar.jpg'
 import {SettingsScreen} from "react-native-settings-screen";
-import styles from './styles';
-import {DrawerActions} from "react-navigation";
-import AMIcon from '../../assets/icons/icon_font';
 
+//icons
+import AMIcon from '../../assets/icons/icon_font';
+import Icon from 'react-native-vector-icons/Entypo';
+
+//styles
+import styles from './styles';
 const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'sans-serif';
 
 const renderProfile = () => (
@@ -19,7 +22,7 @@ const renderProfile = () => (
     </View>
 );
 
-class OptionsScreen extends Component {
+class ProfileScreen extends Component {
     constructor(props){
         super(props);
     }
@@ -158,10 +161,8 @@ class OptionsScreen extends Component {
             <Container style={styles.container}>
                 <Header>
                     <Left>
-                        <Button onPress={() => {
-                            this.props.navigation.goBack();
-                        }}>
-                            <AMIcon name={'back_arrow'} style={{color: 'white', aspectRatio: 1.0}}/>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <AMIcon name={'back_arrow'} style={{color: 'white', aspectRatio: 0.5}}/>
                         </Button>
                     </Left>
                     <Body>
@@ -190,4 +191,4 @@ class OptionsScreen extends Component {
     }
 }
 
-export default OptionsScreen;
+export default ProfileScreen;
