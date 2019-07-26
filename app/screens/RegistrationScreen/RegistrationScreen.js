@@ -5,7 +5,7 @@ import {
     ImageBackground,
     Text,
     TextInput,
-    Alert
+    Alert, ToastAndroid
 } from 'react-native';
 import {Header, Body, DatePicker, Content, Left, Button, Title} from "native-base";
 import * as firebase from 'react-native-firebase';
@@ -31,12 +31,13 @@ class RegistrationScreen extends Component {
             email: '',
             password1: '',
             password2: '',
-            defaultDate: new Date(moment().subtract(18,'year').format('YYYY-MM-DDTHH:mm:ss.sssZ')),
+            defaultDate: new Date(moment().subtract(18, 'year').format('YYYY-MM-DDTHH:mm:ss.sssZ')),
             minDate: new Date(moment().subtract(100, 'year').format('YYYY-MM-DDTHH:mm:ss.sssZ')),
             maxDate: new Date(),
             dob: '',
             showPassword: true,
-            press: false
+            press: false,
+            isConnected: false
         };
     }
     
@@ -95,28 +96,47 @@ class RegistrationScreen extends Component {
         }
     };
     
+    /**
+     * Checks User is connected to the Internet
+     */
+    checkConnection = async () => {
+        let state = await NetInfo.fetch();
+        if (!state.isConnected) {
+            this.setState({isConnected: false});
+            ToastAndroid.showWithGravity(
+                'No Internet Connection',
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            );
+        } else {
+            console.log("You are currently connected! Signing in....");
+        }
+        this.setState({isConnected: state.isConnected});
+        console.log(`Connected? ${state.isConnected}`);
+        return state;
+    };
+    
     validateEntry = () => {
         if (this.state.email == null || this.state.email === "") {
-            alert("Email address field cannot be empty!");
+            ToastAndroid.show("Email address field cannot be empty!", 3);
             return false;
         } else if (this.state.lastName == null || this.state.lastName === "") {
-            alert("Last Name field cannot be empty!");
+            ToastAndroid.show("Last Name field cannot be empty!", 3);
             return false;
         } else if (this.state.firstName == null || this.state.firstName === "") {
-            alert("First name field cannot be empty!");
+            ToastAndroid.show("First name field cannot be empty!", 3);
             return false;
         } else if (this.state.dob == null || this.state.dob === "") {
-            alert("Date of Birth field cannot be empty!");
+            ToastAndroid.show("Date of Birth field cannot be empty!", 3);
             return false;
         } else if (this.state.password1.toString() !== this.state.password2.toString()) {
-            alert('PASSWORD MISMATCH: Make sure both passwords are the same');
+            ToastAndroid.show("PASSWORD MISMATCH: Make sure both passwords are the same", 3);
             return false;
         }
         return true;
     };
     
     submit() {
-    
         /**
          * Controls the email verification process
          * Displays an info message box upon successful registration
@@ -151,7 +171,7 @@ class RegistrationScreen extends Component {
                 console.log(error.message);
             });
         }
-    
+        
         /**
          * Updates the current user's display name field of the firebase user object
          * user.display name = "first name" + "last name"
@@ -167,40 +187,30 @@ class RegistrationScreen extends Component {
                 })
                 .catch((error) => console.log(error.message));
         }
-        /**
-         * Checks User is connected to the Internet
-         */
-        function checkConnection() {
-            NetInfo.fetch().then(state => {
-                if(!state.isConnected){
-                    console.log(`Is connected: ${state.isConnected}`);
-                    console.log('Please connect to the Internet to Sign Up!');
-                    return false;
-                }
-            });
-            console.log('You are currently connected!');
-            return true;
-        }
         
-        if (checkConnection() && this.validateEntry()) {
-            firebase.auth().createUserWithEmailAndPassword(this.state.email.trim(), this.state.password1)
-                .then((success) => {
-                    console.log('New account created!: ', success);
-                    verifyEmail(this.props);
-                    updateUserProfile(this.state.firstName.trim(), this.state.lastName.trim());
-                })
-                .catch((error) => {
-                    // Handle Errors here.
-                    let errorCode = error.code;
-                    let errorMessage = error.message;
-                    if (errorCode === 'auth/weak-password') {
-                        alert('WEAK PASSWORD: Make sure your password is at least 6 characters long.');
-                    } else {
-                        alert(errorMessage);
-                    }
-                    console.log(error);
-                });
-        }
+        //SIGN UP API
+        this.checkConnection().then((result) => {
+            console.log('Connection Status:', result);
+            if (this.validateEntry() && this.state.isConnected) {
+                firebase.auth().createUserWithEmailAndPassword(this.state.email.trim(), this.state.password1)
+                    .then((success) => {
+                        console.log('New account created!: ', success);
+                        verifyEmail(this.props);
+                        updateUserProfile(this.state.firstName.trim(), this.state.lastName.trim());
+                    })
+                    .catch((error) => {
+                        // Handle Errors here.
+                        let errorCode = error.code;
+                        let errorMessage = error.message;
+                        if (errorCode === 'auth/weak-password') {
+                            alert('WEAK PASSWORD: Make sure your password is at least 6 characters long.');
+                        } else {
+                            alert(errorMessage);
+                        }
+                        console.log(error);
+                    });
+            }
+        })
     }
     
     render() {

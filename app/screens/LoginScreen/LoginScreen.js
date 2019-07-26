@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert} from 'react-native';
-import {Header, Body, Content, Left, Button } from "native-base";
+import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert, ToastAndroid} from 'react-native';
+import {Header, Body, Content, Left, Button} from "native-base";
 import * as firebase from 'react-native-firebase';
 import {ShowNavigationBar} from "react-native-navigation-bar-color";
 import OfflineNotice from "../../components/OfflineNotice";
@@ -21,7 +21,8 @@ class LoginScreen extends Component {
             email: '',
             password: '',
             showPassword: true,
-            press: false
+            press: false,
+            isConnected: false,
         };
     }
     
@@ -64,22 +65,38 @@ class LoginScreen extends Component {
         }
     };
     
+    /**
+     * Checks User is connected to the Internet
+     */
+    checkConnection = async () => {
+        let state = await NetInfo.fetch();
+        if (!state.isConnected) {
+            this.setState({isConnected: false});
+            ToastAndroid.showWithGravity(
+                'No Internet Connection',
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            );
+        } else {
+            console.log("You are currently connected! Signing in....");
+        }
+        this.setState({isConnected: state.isConnected});
+        console.log(`Connected? ${state.isConnected}`);
+        return state;
+    };
+    
     validateEntry() {
         if (this.state.email == null || this.state.email === "") {
-            alert("Email address field cannot be empty!");
+            ToastAndroid.show("Email address field cannot be empty!", 3);
             return false;
         } else if (this.state.password == null || this.state.password === "") {
-            alert("Password field cannot be empty!");
+            ToastAndroid.show("Password field cannot be empty!", 3);
             return false;
         }
         return true;
     }
     
     submit = () => {
-        let data = {};
-        data.email = this.state.email;
-        data.password = this.state.password;
-    
         /**
          * Sends a new verification email link to the give user's email
          * Simple info message box displayed when email has been sent
@@ -122,34 +139,28 @@ class LoginScreen extends Component {
             }
         }
         
-        function checkConnection() {
-            NetInfo.fetch().then(state => {
-                if(!state.isConnected){
-                    console.log(`Is connected: ${state.isConnected}`);
-                    console.log('Please connect to the Internet to Sign Up!');
-                    return false;
-                }
-            });
-            console.log('You are currently connected!');
-            return true;
-        }
-        
-        if (this.validateEntry() && checkConnection()) {
-            console.log("signing in...");
-            firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
-                checkEmailVerified(this.props);
-            }).catch((error) => {
-                // Handle Errors here.
-                let errorCode = error.code;
-                let errorMessage = error.message;
-                if (errorCode === 'auth/wrong-password') {
-                    alert('Wrong password.');
-                } else {
-                    alert(errorMessage);
-                }
-                console.log(error);
-            });
-        }
+        /**
+         * SIGN IN API
+         */
+        this.checkConnection().then((result) => {
+            console.log('Connection Status:', result);
+            if (this.validateEntry() && this.state.isConnected) {
+                console.log("signing in...");
+                firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
+                    checkEmailVerified(this.props);
+                }).catch((error) => {
+                    // Handle Errors here.
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Wrong password.');
+                    } else {
+                        alert(errorMessage);
+                    }
+                    console.log(error);
+                });
+            }
+        }).catch(reason => console.warn(reason));
     };
     
     render() {
@@ -160,7 +171,11 @@ class LoginScreen extends Component {
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <AMIcon name={'back_arrow'} style={styles.backArrow}/>
-                            <Text style={{color: 'white', fontSize: 17, marginHorizontal: 10}}>Back</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 17,
+                                marginHorizontal: 10
+                            }}>Back</Text>
                         </Button>
                     </Left>
                     <Body>

@@ -110,7 +110,6 @@ class HomeScreen extends Component {
                     </View>
                 </Content>
                 <NavWheel/>
-                {/*<ImageBackground source={navWheelBackground} style={styles.navWheelBackground}>*/}
                 <Footer style={{backgroundColor: 'transparent'}}>
 
                 </Footer>
