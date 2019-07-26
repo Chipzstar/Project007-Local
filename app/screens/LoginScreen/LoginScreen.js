@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert} from 'react-native';
+import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert, ToastAndroid} from 'react-native';
 import {Header, Body, Content, Left, Button} from "native-base";
 import * as firebase from 'react-native-firebase';
 import {ShowNavigationBar} from "react-native-navigation-bar-color";
 import OfflineNotice from "../../components/OfflineNotice";
-import NetInfo, {useNetInfo} from "@react-native-community/netinfo";
+import NetInfo from "@react-native-community/netinfo";
 
 //images & icons
 import bgImage from '../../../app/assets/images/drawable-xxxhdpi/welcome-background.png';
@@ -65,41 +65,38 @@ class LoginScreen extends Component {
         }
     };
     
+    /**
+     * Checks User is connected to the Internet
+     */
     checkConnection = async () => {
         let state = await NetInfo.fetch();
         if (!state.isConnected) {
             this.setState({isConnected: false});
-            Alert.alert(
+            ToastAndroid.showWithGravity(
                 'No Internet Connection',
-                'Please connect to the Internet to Sign Up!',
-                [
-                    {
-                        text: 'Ok',
-                        onPress: () => console.log('Ok pressed')
-                    }
-                ],
-                {cancelable: true}
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
             );
         } else {
             console.log("You are currently connected! Signing in....");
         }
         this.setState({isConnected: state.isConnected});
         console.log(`Connected? ${state.isConnected}`);
+        return state;
     };
     
     validateEntry() {
         if (this.state.email == null || this.state.email === "") {
-            alert("Email address field cannot be empty!");
+            ToastAndroid.show("Email address field cannot be empty!", 3);
             return false;
         } else if (this.state.password == null || this.state.password === "") {
-            alert("Password field cannot be empty!");
+            ToastAndroid.show("Password field cannot be empty!", 3);
             return false;
         }
         return true;
     }
     
     submit = () => {
-        this.checkConnection();
         /**
          * Sends a new verification email link to the give user's email
          * Simple info message box displayed when email has been sent
@@ -142,22 +139,28 @@ class LoginScreen extends Component {
             }
         }
         
-        if (this.validateEntry() && this.state.isConnected) {
-            console.log("signing in...");
-            firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
-                checkEmailVerified(this.props);
-            }).catch((error) => {
-                // Handle Errors here.
-                let errorCode = error.code;
-                let errorMessage = error.message;
-                if (errorCode === 'auth/wrong-password') {
-                    alert('Wrong password.');
-                } else {
-                    alert(errorMessage);
-                }
-                console.log(error);
-            });
-        }
+        /**
+         * SIGN IN API
+         */
+        this.checkConnection().then((result) => {
+            console.log('Connection Status:', result);
+            if (this.validateEntry() && this.state.isConnected) {
+                console.log("signing in...");
+                firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
+                    checkEmailVerified(this.props);
+                }).catch((error) => {
+                    // Handle Errors here.
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Wrong password.');
+                    } else {
+                        alert(errorMessage);
+                    }
+                    console.log(error);
+                });
+            }
+        }).catch(reason => console.warn(reason));
     };
     
     render() {

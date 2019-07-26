@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Alert, ImageBackground, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+    ImageBackground,
+    Text,
+    TextInput,
+    ToastAndroid,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import {Header, Body, Content, Left, Button} from "native-base";
 import bgImage from "../../assets/images/drawable-xxxhdpi/welcome-background.png";
 import {ShowNavigationBar} from 'react-native-navigation-bar-color';
@@ -40,45 +47,44 @@ class ForgotPasswordScreen extends Component {
         let state = await NetInfo.fetch();
         if (!state.isConnected) {
             this.setState({isConnected: false});
-            Alert.alert(
+            ToastAndroid.showWithGravity(
                 'No Internet Connection',
-                'Please connect to the Internet to Sign Up!',
-                [
-                    {
-                        text: 'Ok',
-                        onPress: () => console.log('Ok pressed')
-                    }
-                ],
-                {cancelable: true}
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
             );
         } else {
             console.log("You are currently connected! Signing in....");
         }
         this.setState({isConnected: state.isConnected});
         console.log(`Connected? ${state.isConnected}`);
+        return state;
     };
     
     validateEmail = () => {
         if (this.state.email == null || this.state.email === "") {
-            alert("You must enter an email address!");
+            ToastAndroid.show("You must enter an email address!", 3);
             return false;
         }
         return true;
     };
     
     submit() {
-        this.checkConnection();
-        // Password Reset API
-        if (this.validateEmail() && this.state.isConnected) {
-            firebase.auth().sendPasswordResetEmail(this.state.email.trim()).then(() => {
-                alert('Password Reset Email sent successfully! Please check your inbox');
-                this.props.navigation.navigate('SignedOut');
-            }).catch((error) => {
-                //Error handling if for invalid inputs
-                alert(error.message);
-                console.log(error);
-            });
-        }
+        /**
+         * Password Reset API
+         */
+        this.checkConnection().then((result) => {
+            console.log('Connection Status:', result);
+            if (this.validateEmail() && this.state.isConnected) {
+                firebase.auth().sendPasswordResetEmail(this.state.email.trim()).then(() => {
+                    alert('Password Reset Email sent successfully! Please check your inbox');
+                    this.props.navigation.navigate('SignedOut');
+                }).catch((error) => {
+                    //Error handling if for invalid inputs
+                    alert(error.message);
+                    console.log(error);
+                });
+            }
+        }).catch(reason => console.warn(reason));
     }
     
     render() {

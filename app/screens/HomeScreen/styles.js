@@ -24,7 +24,7 @@ export default (styles = StyleSheet.create({
         flex: 0,
         flexGrow: 0.5,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-start'
         // paddingBottom: HEIGHT * 0.085,
         /*borderWidth : 1,
         borderColor: 'white'*/
@@ -41,7 +41,7 @@ export default (styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         aspectRatio: 4.0,
-        alignItems: 'center',
+        alignItems: 'center'
         // left: WIDTH * 0.05
     },
     text: {
@@ -52,7 +52,7 @@ export default (styles = StyleSheet.create({
         aspectRatio: 1.0
     },
     tileContainer: {
-        flex: 3,
+        flex: 4,
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-around',

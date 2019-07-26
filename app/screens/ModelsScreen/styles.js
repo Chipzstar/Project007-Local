@@ -11,10 +11,17 @@ export default (styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        alignItems: 'center',
-        marginBottom: HEIGHT * 0.05,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        marginBottom: HEIGHT * 0.25,
         /*borderWidth: 1,
         borderColor: 'red'*/
+    },
+    header: {
+        height: '100%',
+        width: '100%',
+        aspectRatio: 2.0,
+        alignItems: 'center'
     },
     welcome: {
         flex: 1,
