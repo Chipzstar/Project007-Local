@@ -16,7 +16,7 @@ export default (styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         aspectRatio: 4.0,
-        alignItems: 'center'
+        alignSelf: 'center'
         // left: WIDTH * 0.05
     },
     contentContainer:{
@@ -52,7 +52,7 @@ export default (styles = StyleSheet.create({
         aspectRatio: 1.0
     },
     tileContainer: {
-        flex: 4,
+        flex: 3,
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-around',

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
-import * as firebase from 'react-native-firebase';
-import styles from './styles';
-import img from '../../../assets/images/drawable-xxxhdpi/q.png';
+import {View, ActivityIndicator, TouchableOpacity, Image} from 'react-native';
+import * as firebase from "react-native-firebase";
+import img from "../../../assets/images/drawable-xxxhdpi/vantage.png";
+import styles from "./Stylesheets/bigTile";
 
-export default class QTile extends Component {
+export default class BigTrackTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,25 +13,37 @@ export default class QTile extends Component {
             url: "",
         }
     }
-
-//The code that is called when the component is first mounted. Use it to setup the component and load the image files
+    
     componentDidMount() {
         this.setState({isMounted: true});
-        this.getAndLoadFirebaseUrl();
+        this.getFileRef();
     }
     
-    async getAndLoadFirebaseUrl() {
+    async getFileRef() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('HomeScreenTiles/q.png');
-            ref.getDownloadURL().then(url => {
-                this.setState({url: url});
-                this.setState({loading: false});
-            }).catch((error) => {
-                this.setState({url: img});
-                this.setState({loading: false});
-                console.log(error);
-            })
+            const query = await firebase.firestore().collection('app_tiles').doc('track_mode');
+            query.get().then((doc) => {
+                if (doc.exists) {
+                    let path = doc.data()[this.props.image];
+                    console.log(`Storage Location: ${path}`);
+                    this.getAndLoadFirebaseUrl(path);
+                }
+            }).catch((error) => console.log(error));
         }
+    }
+    
+    async getAndLoadFirebaseUrl(path) {
+        const ref = await firebase.storage().refFromURL(path);
+        console.log(ref);
+        ref.getDownloadURL().then(url => {
+            this.setState({url: url});
+            this.setState({loading: false});
+            console.log(`URL: ${url}`);
+        }).catch((error) => {
+            this.setState({url: img});
+            this.setState({loading: false});
+            console.log(error);
+        })
     };
 
 //The code that is called when the component is about to unmount. Use it to cancel any http calls otherwise you will get a memory warning from React
@@ -45,6 +57,7 @@ export default class QTile extends Component {
             //Write whatever code you want here.
         }
     }
+    
     render() {
         if (this.state.mounted) {
             if (this.state.loading) {
@@ -68,4 +81,4 @@ export default class QTile extends Component {
     }
 }
 
-export {QTile};
+export { BigTrackTile };

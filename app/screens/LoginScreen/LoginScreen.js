@@ -135,7 +135,8 @@ class LoginScreen extends Component {
                     {cancelable: false}
                 );
             } else {
-                console.log('User successfully signed in! ');
+                console.log('User successfully signed in! ', user);
+                ToastAndroid.show(`Welcome back ${user.displayName}!`, 5);
             }
         }
         
@@ -152,11 +153,9 @@ class LoginScreen extends Component {
                     // Handle Errors here.
                     let errorCode = error.code;
                     let errorMessage = error.message;
-                    if (errorCode === 'auth/wrong-password') {
-                        alert('Wrong password.');
-                    } else {
-                        alert(errorMessage);
-                    }
+                    if (errorCode ===  'auth/user-not-found') ToastAndroid.show('The email address not registered to any account!', 5);
+                    else if (errorCode === 'auth/wrong-password') ToastAndroid.show('Wrong password.', 3);
+                    else ToastAndroid.show(errorMessage, 5);
                     console.log(error);
                 });
             }

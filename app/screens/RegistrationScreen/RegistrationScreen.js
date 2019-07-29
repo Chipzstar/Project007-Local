@@ -130,7 +130,7 @@ class RegistrationScreen extends Component {
             ToastAndroid.show("Date of Birth field cannot be empty!", 3);
             return false;
         } else if (this.state.password1.toString() !== this.state.password2.toString()) {
-            ToastAndroid.show("PASSWORD MISMATCH: Make sure both passwords are the same", 3);
+            ToastAndroid.show("PASSWORD MISMATCH: Make sure both passwords are the same", 5);
             return false;
         }
         return true;
@@ -182,8 +182,7 @@ class RegistrationScreen extends Component {
             let user = firebase.auth().currentUser;
             user.updateProfile({displayName: `${firstName} ${lastName}`})
                 .then(() => {
-                    console.log("User Profile Created!");
-                    console.log(user);
+                    console.log("User Profile Created!", user);
                 })
                 .catch((error) => console.log(error.message));
         }
@@ -202,11 +201,8 @@ class RegistrationScreen extends Component {
                         // Handle Errors here.
                         let errorCode = error.code;
                         let errorMessage = error.message;
-                        if (errorCode === 'auth/weak-password') {
-                            alert('WEAK PASSWORD: Make sure your password is at least 6 characters long.');
-                        } else {
-                            alert(errorMessage);
-                        }
+                        if (errorCode === 'auth/weak-password') ToastAndroid.show('WEAK PASSWORD: Make sure your password is at least 6 characters long.', 5);
+                        else ToastAndroid.show(errorMessage, 5);
                         console.log(error);
                     });
             }

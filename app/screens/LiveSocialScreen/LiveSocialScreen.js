@@ -1,28 +1,44 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { ImageBackground, Image} from 'react-native';
+import { Header, Left, Body, Right, Content, Button} from "native-base";
+import bgImage from '../../assets/images/drawable-xxxhdpi/live_background.png';
+import headerTitle from '../../assets/images/drawable-xxxhdpi/aston_martin_live.png';
+
+//components
+import AMIcon from '../../assets/icons/icon_font';
+
+//styles
+import styles from './styles';
 
 class LiveSocialScreen extends Component {
+    constructor(props) {
+        super(props);
+    }
+    
     state = {};
     
     render() {
         return (
-            <View style={styles.welcome}>
-                <Text style={styles.text}>Welcome to the LiveSocialScreen Screen!</Text>
-            </View>
+            <ImageBackground source={bgImage} style={styles.backgroundContainer}>
+                <Header transparent>
+                    <Left style={{flex: 1}}>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <AMIcon name={'back_arrow'} style={styles.back}/>
+                        </Button>
+                    </Left>
+                    <Body style={{flex: 1}}>
+                        <Image source={headerTitle} resizeMode="contain" style={styles.header}/>
+                    </Body>
+                    <Right style={{flex: 1}}>
+                    
+                    </Right>
+                </Header>
+                <Content>
+                
+                </Content>
+            </ImageBackground>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    welcome: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
-});
 
 export default LiveSocialScreen;

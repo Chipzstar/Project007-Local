@@ -33,15 +33,15 @@ class QPersonalisationScreen extends Component {
         return (
             <ImageBackground source={bgImage} style={styles.backgroundContainer}>
                 <Header transparent>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <AMIcon name={'back_arrow'} style={styles.backArrow}/>
                         </Button>
                     </Left>
-                    <Body>
-                        <Image source={headerTitle} style={styles.header}/>
+                    <Body style={{flex: 1}}>
+                        <Image source={headerTitle} resizeMode="contain" style={styles.header}/>
                     </Body>
-                    <Right>
+                    <Right style={{flex: 1}}>
                     
                     </Right>
                 </Header>

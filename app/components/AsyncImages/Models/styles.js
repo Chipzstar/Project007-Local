@@ -7,17 +7,16 @@ export default (styles = StyleSheet.create({
     menuItem: {
         flex: 3,
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
         //alignItems: 'center'
-        //alignItems: 'center',
         /*borderWidth: 2,
-        borderColor: 'red',*/
+        borderColor: 'red'*/
     },
     image: {
         width: '100%',
         height: '100%',
         borderRadius: 20,
-        resizeMode: 'cover'
+        resizeMode: 'contain'
         /*borderWidth: 1,
         borderColor: 'white'*/
     },

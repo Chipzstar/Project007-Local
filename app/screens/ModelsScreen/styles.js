@@ -21,15 +21,6 @@ export default (styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         aspectRatio: 2.0,
-        alignItems: 'center'
-    },
-    welcome: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold'
+        alignSelf: 'center'
     }
 }));

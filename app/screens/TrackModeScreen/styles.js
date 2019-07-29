@@ -23,7 +23,7 @@ export default (styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         aspectRatio: 4.0,
-        alignItems: 'center'
+        alignSelf: 'center'
         // left: WIDTH * 0.05
     }
 }));

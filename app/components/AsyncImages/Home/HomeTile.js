@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import * as firebase from 'react-native-firebase';
-import styles from './Stylesheets/smallTile';
-import img from '../../../assets/images/drawable-xxxhdpi/amr_drivers_club.png';
+import styles from './styles'
+import img from '../../../assets/images/drawable-xxxhdpi/models.png';
 
-export default class DriversClubTile extends Component {
+export default class HomeTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,21 +17,34 @@ export default class DriversClubTile extends Component {
 //The code that is called when the component is first mounted. Use it to setup the component and load the image files
     componentDidMount() {
         this.setState({isMounted: true});
-        this.getAndLoadFirebaseUrl();
+        this.getFileRef();
     }
     
-    async getAndLoadFirebaseUrl() {
+    async getFileRef() {
         if (this.state.mounted) {
-            const ref = await firebase.storage().ref('TrackModeScreenTiles/amr_drivers_club.png');
-            ref.getDownloadURL().then(url => {
-                this.setState({url: url});
-                this.setState({loading: false});
-            }).catch((error) => {
-                this.setState({url: img});
-                this.setState({loading: false});
-                console.log(error);
-            })
+            const query = await firebase.firestore().collection('app_tiles').doc('home');
+            query.get().then((doc) => {
+                if (doc.exists) {
+                    let path = doc.data()[this.props.image];
+                    console.log(`Storage Location: ${path}`);
+                    this.getAndLoadFirebaseUrl(path);
+                }
+            }).catch((error) => console.log(error));
         }
+    }
+    
+    async getAndLoadFirebaseUrl(path) {
+        const ref = await firebase.storage().refFromURL(path);
+        console.log(ref);
+        ref.getDownloadURL().then(url => {
+            this.setState({url: url});
+            this.setState({loading: false});
+            console.log(`URL: ${url}`);
+        }).catch((error) => {
+            this.setState({url: img});
+            this.setState({loading: false});
+            console.log(error);
+        })
     };
 
 //The code that is called when the component is about to unmount. Use it to cancel any http calls otherwise you will get a memory warning from React
@@ -45,6 +58,7 @@ export default class DriversClubTile extends Component {
             //Write whatever code you want here.
         }
     }
+    
     render() {
         if (this.state.mounted) {
             if (this.state.loading) {
@@ -57,15 +71,15 @@ export default class DriversClubTile extends Component {
                 return (
                     <View style={styles.menuItem}>
                         <TouchableOpacity onPress={this.props.onPress}>
-                            <Image source={{uri : this.state.url}} style={styles.image}/>
+                            <Image source={{uri: this.state.url}} style={styles.image}/>
                         </TouchableOpacity>
                     </View>
                 )
             }
-        }  else {
+        } else {
             return null;
         }
     }
 }
 
-export {DriversClubTile};
+export {HomeTile};

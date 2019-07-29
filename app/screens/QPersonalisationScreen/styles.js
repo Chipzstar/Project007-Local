@@ -19,7 +19,8 @@ export default (styles = StyleSheet.create({
     header: {
         height: '100%',
         width: '100%',
-        resizeMode: 'contain',
+        aspectRatio: 4.0,
+        alignSelf: 'center'
         // left: WIDTH * 0.05
     },
     backArrow: {

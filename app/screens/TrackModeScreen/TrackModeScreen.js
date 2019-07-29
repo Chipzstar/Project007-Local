@@ -11,12 +11,8 @@ import headerTitle from "../../assets/images/drawable-xxxhdpi/track_mode_header.
 //components
 import OfflineStatus from '../../components/OfflineNotice';
 import NavWheel from "../../components/NavWheel";
-import FindTrackTile from "../../components/AsyncImages/Track/FindTrackTile";
-import SetUpTile from "../../components/AsyncImages/Track/SetUpTile";
-import TelemetryTile from "../../components/AsyncImages/Track/TelemetryTile";
-import CarRecordTile from "../../components/AsyncImages/Track/CarRecordTile";
-import DriversClubTile from "../../components/AsyncImages/Track/DriversClubTile";
-import LapTimerTile from "../../components/AsyncImages/Track/LapTimerTile";
+import SmallTrackTile from "../../components/AsyncImages/Track/SmallTrackTile";
+import BigTrackTile from "../../components/AsyncImages/Track/BigTrackTile";
 
 //styles
 import styles from './styles';
@@ -37,25 +33,25 @@ class TrackModeScreen extends Component {
             <ImageBackground source={bgImage} style={styles.backgroundContainer}>
                 <OfflineStatus/>
                 <Header transparent>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <AMIcon name={'back_arrow'} style={{color: 'white', height: 20, width: 30}}/>
                         </Button>
                     </Left>
-                    <Body>
+                    <Body style={{flex: 1}}>
                         <Image source={headerTitle} resizeMode="contain" style={styles.header}/>
                     </Body>
-                    <Right>
+                    <Right style={{flex: 1}}>
                     
                     </Right>
                 </Header>
                 <Content contentContainerStyle={styles.contentContainer}>
-                    <FindTrackTile/>
-                    <TelemetryTile/>
-                    <DriversClubTile/>
-                    <SetUpTile/>
-                    <CarRecordTile/>
-                    <LapTimerTile/>
+                    <BigTrackTile image={'find_my_track'}/>
+                    <SmallTrackTile image={'telemetry'}/>
+                    <SmallTrackTile image={'drivers_club'}/>
+                    <BigTrackTile image={'car_set_up'}/>
+                    <SmallTrackTile image={'record_in_car'}/>
+                    <SmallTrackTile image={'lap_timer'}/>
                 </Content>
                 <NavWheel/>
                 <Footer style={{backgroundColor: 'transparent'}}>
