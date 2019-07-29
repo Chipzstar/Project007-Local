@@ -154,10 +154,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation "com.google.firebase:firebase-database:17.0.0"
     implementation "com.google.firebase:firebase-storage:17.0.0"
+    implementation "com.google.firebase:firebase-firestore:19.0.0"
 }
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'Ionicons.ttf', 'Feather.ttf', 'Entypo.ttf' ] // Name of the font files you want to copy
+    iconFontNames: [ 'Ionicons.ttf', 'Feather.ttf', 'Entypo.ttf', 'FontAwesome5_Regular.ttf' ] // Name of the font files you want to copy
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
