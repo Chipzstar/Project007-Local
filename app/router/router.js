@@ -15,7 +15,7 @@ import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import ProfileScreen from "../screens/SettingsScreen/ProfileScreen";
+import SettingScreen from "../screens/SettingsScreen/SettingScreen";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen/AuthLoadingScreen";
 import ModelsScreen from '../screens/ModelsScreen/ModelsScreen';
 import TrackModeScreen from '../screens/TrackModeScreen/TrackModeScreen';
@@ -180,7 +180,7 @@ export const SignedIn = createDrawerNavigator({
         }
     },
     Settings: {
-        screen: ProfileScreen,
+        screen: SettingScreen,
         navigationOptions: {
             title: 'Settings',
         }

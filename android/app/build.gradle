@@ -140,9 +140,9 @@ android {
 
 dependencies {
     implementation project(':@react-native-community_netinfo')
+    implementation project(':react-native-firebase')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-navigation-bar-color')
-    implementation project(':react-native-firebase')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-gesture-handler')

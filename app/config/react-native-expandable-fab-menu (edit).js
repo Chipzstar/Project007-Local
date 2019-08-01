@@ -25,12 +25,12 @@ export class ExpandableFabMenu extends Component {
             rightOffsetX: new Animated.Value(50),
             leftFarOffsetX: new Animated.Value(-100),
             rightFarOffsetX: new Animated.Value(100)
-            
+
         };
         openFab = openFab.bind(this);
         closeFab = closeFab.bind(this);
     }
-    
+
     render() {
         return (
             <View style={styles.container}>
@@ -68,7 +68,7 @@ export class ExpandableFabMenu extends Component {
                         transform: [{translateX: this.state.leftOffsetX}],
                         width: 50,
                         height: 50,
-                        marginBottom: 40
+                        marginBottom: 30
                     }}>
                         <ImageBackground style={{
                             alignSelf: 'center',
@@ -96,7 +96,8 @@ export class ExpandableFabMenu extends Component {
                             opacity: this.state.fadeIn,
                             transform: [{translateY: this.state.upOffsetY}],
                             width: 50,
-                            height: 50
+                            height: 50,
+                            left: 10
                         }}>
                             <ImageBackground style={{
                                 // alignSelf: 'center',
@@ -143,7 +144,7 @@ export class ExpandableFabMenu extends Component {
                         transform: [{translateX: this.state.rightOffsetX}],
                         width: 50,
                         height: 50,
-                        marginBottom: 40
+                        marginBottom: 30
                     }}>
                         <ImageBackground style={{
                             alignSelf: 'center',
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
 });
 
 export function openFab() {
-    
+
     this.setState({open: true}, () => {
         Animated.parallel([
             Animated.timing(
@@ -343,6 +344,6 @@ export function closeFab() {
             }
         )
     ]).start(() => this.setState({open: false}));
-    
+
 }
 */
