@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Image, Dimensions } from 'react-native';
-import { ExpandableFabMenu } from "react-native-expandable-fab-menu";
-import { withNavigation } from 'react-navigation';
+import {Image, Dimensions} from 'react-native';
+import {ExpandableFabMenu} from "react-native-expandable-fab-menu";
+import {withNavigation} from 'react-navigation';
 
 //images & icons
 import openNavWheelIcon from "../assets/images/drawable-xxxhdpi/button.png";
@@ -17,7 +17,9 @@ const {width: WIDTH} = Dimensions.get("window"); //Max Width of phone screen
 const {height: HEIGHT} = Dimensions.get("window"); //Max Height of phone screen
 
 class NavWheel extends Component {
-    state = {};
+    constructor(props) {
+        super(props);
+    };
     
     render() {
         const {navigate} = this.props.navigation;
@@ -58,15 +60,20 @@ class NavWheel extends Component {
                 menuItemClicked={(index) => {
                     switch (index) {
                         case 0:
-                            return navigate('Models');
+                            navigate('Models');
+                            break;
                         case 1:
-                            return navigate('Q');
+                            navigate('Q');
+                            break;
                         case 2:
-                            return navigate('Home');
+                            navigate('Home');
+                            break;
                         case 3:
-                            return navigate('Track');
+                            navigate('Track');
+                            break;
                         case 4:
-                            return navigate('Live')
+                            navigate('Live');
+                            break;
                     }
                 }}
             />

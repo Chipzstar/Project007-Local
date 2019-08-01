@@ -5,12 +5,14 @@ import {
     ImageBackground,
     Text,
     TextInput,
-    Alert, ToastAndroid
+    Alert,
+    ToastAndroid,
+    Keyboard
 } from 'react-native';
 import {Header, Body, DatePicker, Content, Left, Button, Title} from "native-base";
 import * as firebase from 'react-native-firebase';
 import moment from 'moment';
-import {ShowNavigationBar} from "react-native-navigation-bar-color";
+import {HideNavigationBar, ShowNavigationBar} from "react-native-navigation-bar-color";
 import NetInfo from "@react-native-community/netinfo";
 
 //images &icons
@@ -41,12 +43,28 @@ class RegistrationScreen extends Component {
         };
     }
     
-    componentWillMount() {
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            RegistrationScreen._keyboardDidShow
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            RegistrationScreen._keyboardDidHide
+        );
+    }
+    
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+    
+    static _keyboardDidShow(){
         ShowNavigationBar();
     }
     
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        ShowNavigationBar();
+    static _keyboardDidHide(){
+        HideNavigationBar();
     }
     
     static navigationOptions = {

@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, ImageBackground, Text, TextInput, Alert, ToastAndroid} from 'react-native';
+import {
+    View,
+    TouchableOpacity,
+    ImageBackground,
+    Text,
+    TextInput,
+    Alert,
+    ToastAndroid,
+    Keyboard
+} from 'react-native';
 import {Header, Body, Content, Left, Button} from "native-base";
 import * as firebase from 'react-native-firebase';
-import {ShowNavigationBar} from "react-native-navigation-bar-color";
+import {HideNavigationBar, ShowNavigationBar} from "react-native-navigation-bar-color";
 import OfflineNotice from "../../components/OfflineNotice";
 import NetInfo from "@react-native-community/netinfo";
 
@@ -27,11 +36,27 @@ class LoginScreen extends Component {
     }
     
     componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            LoginScreen._keyboardDidShow
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            LoginScreen._keyboardDidHide
+        );
+    }
+    
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+    
+    static _keyboardDidShow(){
         ShowNavigationBar();
     }
     
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        ShowNavigationBar();
+    static _keyboardDidHide(){
+        HideNavigationBar();
     }
     
     static navigationOptions = {

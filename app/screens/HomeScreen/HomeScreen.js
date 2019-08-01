@@ -3,7 +3,6 @@ import {ImageBackground, Image, View, TouchableOpacity} from "react-native";
 import {DrawerActions, withNavigation} from "react-navigation";
 import {Header, Left, Right, Button, Body, Content, Footer} from 'native-base';
 import {HideNavigationBar} from 'react-native-navigation-bar-color';
-// import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 //images and icons
@@ -34,6 +33,10 @@ class HomeScreen extends Component {
     
     componentDidUpdate(prevProps, prevState, snapshot) {
         HideNavigationBar();
+    }
+    
+    componentWillUnmount() {
+    
     }
     
     state = {

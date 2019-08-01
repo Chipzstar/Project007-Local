@@ -1,21 +1,33 @@
 import React, {Component} from 'react';
 import { ImageBackground, Image} from 'react-native';
-import { Header, Left, Body, Right, Content, Button} from "native-base";
+import { Header, Left, Body, Right, Content, Button, Footer} from "native-base";
 import bgImage from '../../assets/images/drawable-xxxhdpi/live_background.png';
-import headerTitle from '../../assets/images/drawable-xxxhdpi/aston_martin_live.png';
+import headerTitle from '../../assets/images/drawable-xxxhdpi/am_live_header.png';
 
 //components
 import AMIcon from '../../assets/icons/icon_font';
 
 //styles
 import styles from './styles';
+import {HideNavigationBar} from "react-native-navigation-bar-color";
+import * as firebase from "react-native-firebase";
+import NavWheel from "../../components/NavWheel";
 
 class LiveSocialScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentUser: firebase.auth().currentUser
+        };
     }
     
-    state = {};
+    componentDidMount() {
+        HideNavigationBar();
+    }
+    
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        HideNavigationBar();
+    }
     
     render() {
         return (
@@ -36,6 +48,9 @@ class LiveSocialScreen extends Component {
                 <Content>
                 
                 </Content>
+                <NavWheel/>
+                <Footer style={{backgroundColor: 'transparent'}}>
+                </Footer>
             </ImageBackground>
         )
     }

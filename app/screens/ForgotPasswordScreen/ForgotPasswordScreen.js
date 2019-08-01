@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     ImageBackground,
+    Keyboard,
     Text,
     TextInput,
     ToastAndroid,
@@ -9,7 +10,7 @@ import {
 } from 'react-native';
 import {Header, Body, Content, Left, Button} from "native-base";
 import bgImage from "../../assets/images/drawable-xxxhdpi/welcome-background.png";
-import {ShowNavigationBar} from 'react-native-navigation-bar-color';
+import {HideNavigationBar, ShowNavigationBar} from 'react-native-navigation-bar-color';
 import * as firebase from "react-native-firebase";
 import OfflineNotice from "../../components/OfflineNotice";
 //Icons
@@ -30,7 +31,27 @@ class ForgotPasswordScreen extends Component {
     }
     
     componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            ForgotPasswordScreen._keyboardDidShow
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            ForgotPasswordScreen._keyboardDidHide
+        );
+    }
+    
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+    
+    static _keyboardDidShow(){
         ShowNavigationBar();
+    }
+    
+    static _keyboardDidHide(){
+        HideNavigationBar();
     }
     
     static navigationOptions = {
@@ -76,15 +97,15 @@ class ForgotPasswordScreen extends Component {
             console.log('Connection Status:', result);
             if (this.validateEmail() && this.state.isConnected) {
                 firebase.auth().sendPasswordResetEmail(this.state.email.trim()).then(() => {
-                    alert('Password Reset Email sent successfully! Please check your inbox');
+                    ToastAndroid.show('Password Reset Email sent successfully! Please check your inbox', 5);
                     this.props.navigation.navigate('SignedOut');
                 }).catch((error) => {
                     //Error handling if for invalid inputs
-                    alert(error.message);
+                    ToastAndroid.show(error.message, 3);
                     console.log(error);
                 });
             }
-        }).catch(reason => console.warn(reason));
+        }).catch(reason => console.log(reason));
     }
     
     render() {

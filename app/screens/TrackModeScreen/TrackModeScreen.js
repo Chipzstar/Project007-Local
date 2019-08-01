@@ -16,17 +16,23 @@ import BigTrackTile from "../../components/AsyncImages/Track/BigTrackTile";
 
 //styles
 import styles from './styles';
+import * as firebase from "react-native-firebase";
 
 class TrackModeScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentUser: firebase.auth().currentUser
+        };
     }
     
     componentDidMount() {
         HideNavigationBar();
     }
     
-    state = {};
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        HideNavigationBar();
+    }
     
     render() {
         return (

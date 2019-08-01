@@ -17,7 +17,6 @@ export default (styles = StyleSheet.create({
         width: '100%',
         aspectRatio: 4.0,
         alignSelf: 'center'
-        // left: WIDTH * 0.05
     },
     contentContainer:{
         flex: 1,

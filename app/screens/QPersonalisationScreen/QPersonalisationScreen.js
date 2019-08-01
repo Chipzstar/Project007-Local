@@ -2,21 +2,24 @@ import React, {Component} from 'react';
 import {View, ImageBackground, Image} from 'react-native';
 import {Body, Button, Content, Footer, Header, Left, Right} from "native-base";
 import NavWheel from "../../components/NavWheel";
+import * as firebase from "react-native-firebase";
 import {HideNavigationBar} from "react-native-navigation-bar-color";
 
 //Images & Icons
 import AMIcon from "../../assets/icons/icon_font";
 import bgImage from '../../assets/images/drawable-xxxhdpi/q_background.png';
 import headerTitle from '../../assets/images/drawable-xxxhdpi/q_by_aston_martin.png';
-import q_preface from '../../assets/images/drawable-xxxhdpi/q_description.png';
 
+import q_preface from '../../assets/images/drawable-xxxhdpi/q_description.png';
 //styles
 import styles from './styles';
 
 class QPersonalisationScreen extends Component {
     constructor(props) {
         super(props);
-        
+        this.state = {
+            currentUser: firebase.auth().currentUser
+        };
     }
     
     componentDidMount() {
@@ -26,8 +29,6 @@ class QPersonalisationScreen extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         HideNavigationBar();
     }
-    
-    state = {};
     
     render() {
         return (
